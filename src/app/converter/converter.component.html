@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>Currency Converter</h1>
+  <form class="converter">
+    <input type="text" placeholder="Enter amount" [formControl]="amount" />
+    <label for="from">from: </label>
+    <select name="from" id="from" [formControl]="originRateControl">
+      <option value="USD">US Dollar</option>
+      <option value="EUR">Euro</option>
+      <option value="GBP">British Pound</option>
+      <option value="CAD">Canadian Dollar</option>
+    </select>
+    <label for="to">to: </label>
+    <select name="to" id="to" [formControl]="targetRateControl">
+      <option value="USD">US Dollar</option>
+      <option value="EUR">Euro</option>
+      <option value="GBP">British Pound</option>
+      <option value="CAD">Canadian Dollar</option>
+    </select>
+  </form>
+  <div>
+    <h2>{{ summary === 0 ? "Summary" : summary }}</h2>
+  </div>
+</div>

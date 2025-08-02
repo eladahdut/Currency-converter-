@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.converter {
+  display: flex;
+  gap: 10px;
+}
+h2 {
+  color: #8fd9fb;
+}
