@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-converter',
@@ -15,10 +16,14 @@ export class ConverterComponent implements OnInit {
   summary = 0;
 
   ngOnInit(): void {
-    // Subscribe to changes
+    // Dropdowns react immediately
     this.originRateControl.valueChanges.subscribe(() => this.convert());
     this.targetRateControl.valueChanges.subscribe(() => this.convert());
-    this.amount.valueChanges.subscribe(() => this.convert());
+
+    // Debounce input by 800ms
+    this.amount.valueChanges
+      .pipe(debounceTime(800))
+      .subscribe(() => this.convert());
   }
 
   convert() {
@@ -27,7 +32,7 @@ export class ConverterComponent implements OnInit {
     const amount = this.amount.value ?? 1;
 
     if (!from || !to || from === to) {
-      alert('Please select two different currencies.');
+      this.summary = 0;
       return;
     }
 
@@ -36,6 +41,7 @@ export class ConverterComponent implements OnInit {
     )
       .then((resp) => resp.json())
       .then((data) => {
+        console.log('data', data);
         const convertedAmount = data.rates[to];
         this.summary = convertedAmount;
       })
